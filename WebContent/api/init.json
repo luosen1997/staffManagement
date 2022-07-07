@@ -1,0 +1,141 @@
+{
+	"homeInfo": {
+		"title": "首页",
+		"href": "welcome-1.jsp"
+	},
+	"logoInfo": {
+		"title": "员工之家",
+		"image": "images/logo.png",
+		"href": ""
+	},
+	"menuInfo": [
+		{
+			"title": "常规管理",
+			"icon": "fa fa-address-book",
+			"href": "",
+			"target": "_self",
+			"child": [
+				{
+					"title": "用户管理",
+					"href": "",
+					"icon": "fa fa-home",
+					"target": "_self",
+					"child": [
+						{
+							"title": "用户查询",
+							"href": "user/user-list.jsp",
+							"icon": "fa fa-tachometer",
+							"target": "_self"
+						},
+						{
+							"title": "添加用户",
+							"href": "user/user-add.jsp",
+							"icon": "fa fa-tachometer",
+							"target": "_self"
+						}
+					]
+				},
+				{
+					"title": "部门管理",
+					"href": "",
+					"icon": "fa fa-home",
+					"target": "_self",
+					"child": [
+						{
+							"title": "部门查询",
+							"href": "dept/dept-list.jsp",
+							"icon": "fa fa-tachometer",
+							"target": "_self"
+						},
+						{
+							"title": "添加部门",
+							"href": "dept/dept-add.jsp",
+							"icon": "fa fa-tachometer",
+							"target": "_self"
+						}
+					]
+				},
+				{
+					"title": "职位管理",
+					"href": "",
+					"icon": "fa fa-home",
+					"target": "_self",
+					"child": [
+						{
+							"title": "职位查询",
+							"href": "job/job-list.jsp",
+							"icon": "fa fa-tachometer",
+							"target": "_self"
+						},
+						{
+							"title": "添加职位",
+							"href": "job/job-add.jsp",
+							"icon": "fa fa-tachometer",
+							"target": "_self"
+						}
+					]
+				},
+				{
+					"title": "员工管理",
+					"href": "",
+					"icon": "fa fa-home",
+					"target": "_self",
+					"child": [
+						{
+							"title": "员工查询",
+							"href": "emp/empListShow",
+							"icon": "fa fa-tachometer",
+							"target": "_self"
+						},
+						{
+							"title": "添加员工",
+							"href": "emp/empListShowAdd",
+							"icon": "fa fa-tachometer",
+							"target": "_self"
+						}
+					]
+				},
+				{
+					"title": "公告管理",
+					"href": "",
+					"icon": "fa fa-home",
+					"target": "_self",
+					"child": [
+						{
+							"title": "公告查询",
+							"href": "not/not-list.jsp",
+							"icon": "fa fa-tachometer",
+							"target": "_self"
+						},
+						{
+							"title": "部门公告",
+							"href": "not/not-add.jsp",
+							"icon": "fa fa-tachometer",
+							"target": "_self"
+						}
+					]
+				},
+				{
+					"title": "下载中心",
+					"href": "",
+					"icon": "fa fa-home",
+					"target": "_self",
+					"child": [
+						{
+							"title": "文档查询",
+							"href": "document/document-list.jsp",
+							"icon": "fa fa-tachometer",
+							"target": "_self"
+						},
+						{
+							"title": "上传文档",
+							"href": "document/document-upload.jsp",
+							"icon": "fa fa-tachometer",
+							"target": "_self"
+						}
+					]
+				}
+			]
+		}
+	]
+}

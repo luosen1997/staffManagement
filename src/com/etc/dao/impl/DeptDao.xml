@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.etc.dao.DeptDao">
+
+	<resultMap type="com.etc.model.Dept" id="deptMap">
+		<id property="id" column="dept_id"/>
+		<result property="deptname" column="dept_name"/>
+		<result property="deptremark" column="dept_remark"/>
+	</resultMap>
+
+	<select id="getDeptListCount" parameterType="Dept"
+		resultType="int">
+		select count(*) from dept_inf
+		<where>
+			<if test="deptname != null and deptname !='' ">
+				and dept_name like '%${deptname}%'
+			</if>
+		</where>
+	</select>
+
+	<select id="getDeptListByPage" resultMap="deptMap">
+		select * from dept_inf
+		<where>
+			<if test="dept.deptname != null and dept.deptname !='' ">
+				and dept_name like '%${dept.deptname}%'
+			</if>
+		</where>
+		limit #{start},#{limit}
+	</select>
+	
+	<insert id="addDept" parameterType="Dept">
+		insert into dept_inf(dept_name,dept_remark) 
+		values(#{deptname},#{deptremark})
+	</insert>
+	
+	<select id="getDeptById" parameterType="int" resultMap="deptMap">
+		select * from dept_inf where dept_id = #{id}
+	</select>
+	
+	<update id="updateDept" parameterType="Dept">
+		update dept_inf set dept_name=#{deptname},dept_remark=#{deptremark}
+		where dept_id = #{id}
+	</update>
+	
+	<delete id="deleteDept" parameterType="string">
+		delete from dept_inf where dept_id in (${ids})
+	</delete>
+	
+	<select id="findAllDept" resultMap="deptMap">
+        select dept_id,dept_name from dept_inf
+    </select>
+
+</mapper>

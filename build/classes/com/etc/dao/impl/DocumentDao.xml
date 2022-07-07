@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.etc.dao.DocumentDao">
+
+    <resultMap id="documentMap" type="com.etc.model.Document">
+        <result column="doc_id" property="documentId"/>
+        <result column="doc_title" property="documentTitle"/>
+        <result column="doc_creator" property="documentPeople"/>
+        <result column="createdate" property="createDate"/>
+        <result column="doc_remark" property="documentRemark"/>
+        <result column="doc_path" property="documentPath"/>
+    </resultMap>
+
+
+    <select id="getDocumentListCount" parameterType="document" resultType="int">
+        select count(*) from document_inf
+        <where>
+            <if test="documentTitle!=null and documentTitle!=''">
+                and doc_title like '%${documentTitle}%'
+            </if>
+        </where>
+    </select>
+
+
+    <select id="getDocumentListByPage" resultMap="documentMap">
+        select * from document_inf
+        <where>
+            <if test="document.documentTitle!=null and document.documentTitle!=''">
+                and doc_title like '%${document.documentTitle}%'
+            </if>
+        </where>
+        limit #{start},#{limit}
+    </select>
+
+    <insert id="addDocument" parameterType="document">
+        insert into document_inf(doc_title,doc_remark,doc_creator,doc_path)
+        values(#{documentTitle},#{documentRemark},#{documentPeople},#{documentPath})
+    </insert>
+
+
+    <select id="getDocumentById" parameterType="int" resultMap="documentMap">
+    select * from document_inf where doc_id=#{documentId}
+   </select>
+
+    <update id="updateDocument" parameterType="document">
+   update document_inf set doc_title=#{documentTitle},doc_remark=#{documentRemark},
+   doc_creator=#{documentPeople},doc_path=#{documentPath}
+    where doc_id=#{documentId}
+</update>
+
+    <delete id="deleteDocument" parameterType="string">
+    delete from document_inf where doc_id in (${ids})
+   </delete>
+
+</mapper>

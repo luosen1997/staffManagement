@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.etc.dao.JobDao">
+
+	<resultMap type="com.etc.model.Job" id="jobMap">
+		<id property="id" column="job_id"/>
+		<result property="jobname" column="job_name"/>
+		<result property="jobremark" column="job_remark"/>
+	</resultMap>
+
+	<select id="getJobListCount" parameterType="Job"
+		resultType="int">
+		select count(*) from job_inf
+		<where>
+			<if test="jobname != null and jobname !='' ">
+				and job_name like '%${jobname}%'
+			</if>
+		</where>
+	</select>
+
+	<select id="getJobListByPage" resultMap="jobMap">
+		select * from job_inf
+		<where>
+			<if test="job.jobname != null and job.jobname !='' ">
+				and job_name like '%${job.jobname}%'
+			</if>
+		</where>
+		limit #{start},#{limit}
+	</select>
+	
+	<insert id="addJob" parameterType="Job">
+		insert into job_inf(job_name,job_remark) 
+		values(#{jobname},#{jobremark})
+	</insert>
+	
+	<select id="getJobById" parameterType="int" resultMap="jobMap">
+		select * from job_inf where job_id = #{id}
+	</select>
+	
+	<update id="updateJob" parameterType="Job">
+		update job_inf set job_name=#{jobname},job_remark=#{jobremark}
+		where job_id = #{id}
+	</update>
+	
+	<delete id="deleteJob" parameterType="string">
+		delete from job_inf where job_id in (${ids})
+	</delete>
+	
+	<select id="findAllJob" resultMap="jobMap">
+        select job_id,job_name from job_inf
+    </select>
+
+</mapper>

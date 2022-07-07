@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.etc.dao.NotDao">
+
+	<resultMap type="com.etc.model.Not" id="notMap">
+		<id property="id" column="not_id"/>
+		<result property="notname" column="not_name"/>
+		<result property="notcontent" column="not_content"/>
+		<result property="createtime" column="create_time"/>
+		<result property="notpeople" column="not_people"/>
+	</resultMap>
+
+	<select id="getNotListCount" parameterType="Not" resultType="int">
+		select count(*) from notice_inf 
+		<where>
+			<if test="notname != null and notname !='' ">
+				and not_name like '%${notname}%'
+			</if>
+			<if test="notcontent != null and notcontent !='' ">
+			    and not_content like '%${notcontent}%'
+			</if>
+		</where>
+	</select>
+	
+	<select id="getNotListByPage" resultMap="notMap">
+		select * from notice_inf 
+		<where>
+			<if test="notice.notname != null and notice.notname !='' ">
+				and not_name like '%${notice.notname}%'
+			</if>
+			<if test="notice.notcontent != null and notice.notcontent !='' ">
+			    and not_content like '%${notice.notcontent}%'
+			</if>
+		</where>
+		limit #{start},#{limit}
+	</select>
+	
+	<insert id="addNot" parameterType="Not">
+		insert into notice_inf(not_name,not_content) 
+		values(#{notname},#{notcontent})
+	</insert>
+	
+	<select id="getNotById" parameterType="int" resultMap="notMap">
+		select * from notice_inf where not_id = #{id}
+	</select>
+	
+	<update id="updateNot" parameterType="Not">
+		update notice_inf set not_name=#{notname},not_content=#{notcontent}
+		where not_id = #{id}
+	</update>
+	
+	<delete id="deleteNot" parameterType="string">
+		delete from notice_inf where not_id in (${ids})
+	</delete>
+	
+</mapper>

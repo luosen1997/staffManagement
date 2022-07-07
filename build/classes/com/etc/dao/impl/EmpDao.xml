@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.etc.dao.EmpDao">
+
+	<resultMap type="com.etc.model.Emp" id="empMap">
+		<id property="id" column="emp_id"/>
+		<result property="deptid" column="dept_id"/>
+		<result property="jobid" column="job_id"/>
+		<result property="empname" column="emp_name"/>
+		<result property="cardid" column="card_id"/>
+		<result property="empaddress" column="emp_address"/>
+		<result property="postcode" column="post_code"/>
+		<result property="emptel" column="emp_tel"/>
+		<result property="empphone" column="emp_phone"/>
+		<result property="qqnum" column="qq_num"/>
+		<result property="empemail" column="emp_email"/>
+		<result property="empsex" column="emp_sex"/>
+		<result property="empparty" column="emp_party"/>
+		<result property="empbirthday" column="emp_birthday"/>
+		<result property="emprace" column="emp_race"/>
+		<result property="empedu" column="emp_edu"/>
+		<result property="empmajor" column="emp_major"/>
+		<result property="emphobby" column="emp_hobby"/>
+		<result property="empremark" column="emp_remark"/>
+		<result property="createdate" column="create_date"/>
+	</resultMap>
+
+	<select id="getEmpListCount" parameterType="Emp" resultType="int">
+		select count(*) from emp_inf 
+		<where>
+			<if test="jobid !=null ">
+			    and emp_inf.job_id = #{jobid}
+			</if>
+			<if test="empname != null and empname !='' ">
+				and emp_name like '%${empname}%'
+			</if>
+			<if test="cardid != null and cardid !='' ">
+				and card_id like '%${cardid}%'
+			</if>
+			<if test="empsex !=null ">
+			    and emp_sex = #{empsex}
+			</if>
+			<if test="empphone != null and empphone !='' ">
+				and emp_phone like '%${empphone}%'
+			</if>
+			<if test="deptid !=null ">
+			    and emp_inf.dept_id = #{deptid}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getEmpListByPage" resultMap="empMap">
+		select * from emp_inf 
+		<where>
+			<if test="emp.jobid !=null ">
+			    and job_id = #{emp.jobid}
+			</if>
+			<if test="emp.empname != null and emp.empname !='' ">
+				and emp_name like '%${emp.empname}%'
+			</if>
+			<if test="emp.cardid != null and emp.cardid !='' ">
+				and card_id like '%${emp.cardid}%'
+			</if>
+			<if test="emp.empsex !=null ">
+			    and emp_sex = #{emp.empsex}
+			</if>
+			<if test="emp.empphone != null and emp.empphone !='' ">
+				and emp_phone like '%${emp.empphone}%'
+			</if>
+			<if test="emp.deptid !=null ">
+			    and dept_id = #{emp.deptid}
+			</if>
+		</where>
+		limit #{start},#{limit}
+	</select>
+	
+	<insert id="addEmp" parameterType="Emp">
+		insert into emp_inf(dept_id,job_id,emp_name,card_id,emp_address,post_code,emp_tel,emp_phone,
+        qq_num,emp_email,emp_sex,emp_party,emp_birthday,emp_race,emp_edu,emp_major,
+        emp_hobby,emp_remark) values (#{deptid},#{jobid},#{empname},#{cardid},
+        #{empaddress},#{postcode},#{emptel},#{empphone},#{qqnum},#{empemail},#{empsex},
+        #{empparty},#{empbirthday},#{emprace},#{empedu},#{empmajor},#{emphobby},#{empremark})
+	</insert>
+	
+	<select id="getEmpById" parameterType="int" resultMap="empMap">
+		select * from emp_inf where emp_id = #{id}
+	</select>
+	
+	<update id="updateEmp" parameterType="Emp">
+		update emp_inf set emp_name=#{empname},card_id=#{cardid},emp_sex=#{empsex},
+		job_id=#{jobid},emp_edu=#{empedu},emp_email=#{empemail},emp_phone=#{empphone},
+        emp_tel=#{emptel},emp_party=#{empparty},qq_num=#{qqnum},emp_address=#{empaddress},
+        post_code=#{postcode},emp_birthday=#{empbirthday},emp_race=#{emprace},emp_major=#{empmajor},
+        emp_hobby=#{emphobby},emp_remark=#{empremark},dept_id=#{deptid} where emp_id=#{id}
+	</update>
+	
+	<delete id="deleteEmp" parameterType="string">
+		delete from emp_inf where emp_id in (${ids})
+	</delete>
+	
+</mapper>
